@@ -1,13 +1,15 @@
 
 "use client"
 
-import { createContext, useContext, useEffect, type ReactNode } from "react"
+import { createContext, useContext, useEffect, type ReactNode, useCallback } from "react"
 import { useLocalStorage } from "@/hooks/use-local-storage"
 
 interface ThemeProviderProps {
   children: ReactNode;
   defaultTheme?: "system" | "light" | "dark";
   storageKey?: string;
+  attribute?: string;
+  enableSystem?: boolean;
 }
 
 interface ThemeProviderState {
@@ -26,6 +28,8 @@ export function ThemeProvider({
   children,
   defaultTheme = "system",
   storageKey = "vite-ui-theme",
+  attribute = "class",
+  enableSystem = true,
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useLocalStorage<"system" | "light" | "dark">(
@@ -33,28 +37,32 @@ export function ThemeProvider({
     defaultTheme
   )
 
+  const applyTheme = useCallback((themeToApply: "light" | "dark") => {
+    const root = window.document.documentElement;
+    root.classList.remove("light", "dark");
+    root.classList.add(themeToApply);
+  }, []);
+
   useEffect(() => {
-    const root = window.document.documentElement
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    const currentTheme = theme === "system" ? systemTheme : theme;
+    applyTheme(currentTheme);
 
-    root.classList.remove("light", "dark")
-
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light"
-
-      root.classList.add(systemTheme)
-      return
+    if (theme === 'system' && enableSystem) {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const handleChange = () => {
+        applyTheme(mediaQuery.matches ? "dark" : "light");
+      };
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
     }
-
-    root.classList.add(theme)
-  }, [theme])
+  }, [theme, enableSystem, applyTheme]);
+  
 
   const value = {
     theme,
-    setTheme: (theme: "system" | "light" | "dark") => {
-      setTheme(theme)
+    setTheme: (newTheme: "system" | "light" | "dark") => {
+      setTheme(newTheme)
     },
   }
 
