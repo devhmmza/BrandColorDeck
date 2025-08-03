@@ -69,7 +69,7 @@ export default function ColorWeaverClient({ palettes, categories }: ColorWeaverC
   return (
     <>
       <div className="flex flex-col min-h-screen bg-background font-body">
-        <Header onGenerateAI={() => setIsAiGeneratorOpen(true)} />
+        <Header />
         <main className="flex-grow">
           <section className="text-center py-16 md:py-24 px-4">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tighter font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">BrandColorDeck</h1>
