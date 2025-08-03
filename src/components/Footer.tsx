@@ -6,16 +6,16 @@ export default function Footer() {
         <p className="text-balance text-center text-sm leading-loose text-muted-foreground md:text-left">
           Built by{" "}
           <a
-            href="https://firebase.google.com"
+            href="https://github.com/devhmmza"
             target="_blank"
             rel="noreferrer"
             className="font-medium underline underline-offset-4"
           >
-            Firebase
+            hamza
           </a>
           . The source code is available on{" "}
           <a
-            href="https://github.com/firebase/firebase-genkit-samples"
+            href="https://github.com/devhmmza"
             target="_blank"
             rel="noreferrer"
             className="font-medium underline underline-offset-4"
