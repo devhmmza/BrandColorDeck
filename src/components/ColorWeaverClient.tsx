@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AnimatePresence, motion } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, Wand2 } from 'lucide-react';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -72,10 +72,33 @@ export default function ColorWeaverClient({ palettes, categories }: ColorWeaverC
         <Header />
         <main className="flex-grow">
           <section className="text-center py-16 md:py-24 px-4">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">BrandColorDeck</h1>
-            <p className="max-w-2xl mx-auto mt-4 text-muted-foreground md:text-xl">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-4xl md:text-6xl font-bold tracking-tighter font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent"
+            >
+              BrandColorDeck
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="max-w-2xl mx-auto mt-4 text-muted-foreground md:text-xl"
+            >
               Explore 2000+ stunning color palettes. Press <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">Space</kbd> to discover a new palette.
-            </p>
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="mt-8 flex justify-center"
+            >
+              <Button onClick={() => setIsAiGeneratorOpen(true)}>
+                <Wand2 className="mr-2 h-4 w-4" />
+                Generate with AI
+              </Button>
+            </motion.div>
           </section>
 
           <div className="container max-w-screen-2xl mx-auto px-4 pb-16">
@@ -88,11 +111,11 @@ export default function ColorWeaverClient({ palettes, categories }: ColorWeaverC
                   className="w-full"
                 />
               </div>
-              <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-                <TabsList className="grid w-full grid-cols-4 md:w-auto md:grid-cols-none md:flex">
+              <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full md:w-auto">
+                <TabsList className="w-full md:w-auto overflow-x-auto">
                   <TabsTrigger value="All">All</TabsTrigger>
                   <TabsTrigger value="Favorites">Favorites</TabsTrigger>
-                  {categories.slice(0, 5).map(cat => <TabsTrigger key={cat} value={cat}>{cat}</TabsTrigger>)}
+                  {categories.map(cat => <TabsTrigger key={cat} value={cat}>{cat}</TabsTrigger>)}
                 </TabsList>
               </Tabs>
             </div>
