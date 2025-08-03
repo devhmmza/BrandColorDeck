@@ -1,12 +1,13 @@
 
 'use server';
 
-import { generatePaletteFromKeywords, type GeneratePaletteOutput } from '@/ai/flows/generate-palette-from-keywords';
+import { generatePaletteFromKeywords } from '@/ai/flows/generate-palette-from-keywords';
+import { GeneratePaletteOutputSchema } from '@/ai/schemas';
 import { z } from 'zod';
 
 const ActionResponseSchema = z.object({
   success: z.boolean(),
-  palette: GeneratePaletteOutput.optional(),
+  palette: GeneratePaletteOutputSchema.optional(),
   error: z.string().optional(),
 });
 

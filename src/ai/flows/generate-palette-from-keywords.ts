@@ -4,17 +4,7 @@
 'use server';
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
-
-const GeneratePaletteInputSchema = z.object({
-  keywords: z.string().describe('Keywords describing the desired color palette aesthetic.'),
-});
-export type GeneratePaletteInput = z.infer<typeof GeneratePaletteInputSchema>;
-
-const GeneratePaletteOutputSchema = z.object({
-  colors: z.array(z.string().regex(/^#[0-9a-fA-F]{6}$/)).describe('An array of hex color codes.'),
-});
-export type GeneratePaletteOutput = z.infer<typeof GeneratePaletteOutputSchema>;
+import { GeneratePaletteInputSchema, GeneratePaletteOutputSchema, type GeneratePaletteInput, type GeneratePaletteOutput } from '@/ai/schemas';
 
 export async function generatePaletteFromKeywords(input: GeneratePaletteInput): Promise<GeneratePaletteOutput> {
   return generatePaletteFromKeywordsFlow(input);
